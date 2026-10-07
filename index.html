@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#080c10">
+<meta name="description" content="BCHT — Berchtold · CH. Private domain.">
+<meta property="og:title" content="BCHT — Berchtold · CH">
+<meta property="og:description" content="Private domain. Switzerland.">
+<meta property="og:type" content="website">
+<title>BCHT — Berchtold · CH</title>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<style>
+:root{color-scheme:dark;--bg:#080c10;--white:#e2e7e9;--muted:#8b999f;--accent:#94bac5}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg)}body{font-family:Arial,Helvetica,sans-serif;color:var(--white)}
+.scene{position:relative;isolation:isolate;min-height:100svh;overflow:hidden;background:radial-gradient(ellipse at 50% 76%,#13222b55,transparent 55%),linear-gradient(145deg,#10171c55,transparent 55%)}
+.scene:before{content:"";position:absolute;inset:0;z-index:-1;opacity:.16;background-image:linear-gradient(#617c8a18 1px,transparent 1px),linear-gradient(90deg,#617c8a18 1px,transparent 1px);background-size:88px 88px;mask-image:linear-gradient(transparent,#000 75%)}
+.frame{position:absolute;inset:34px;border:1px solid #71828c12;pointer-events:none}.corner{position:absolute;width:17px;height:17px;border-color:#8ca7b54a;border-style:solid}.tl{top:-1px;left:-1px;border-width:1px 0 0 1px}.tr{top:-1px;right:-1px;border-width:1px 1px 0 0}.bl{bottom:-1px;left:-1px;border-width:0 0 1px 1px}.br{bottom:-1px;right:-1px;border-width:0 1px 1px 0}
+.header{position:absolute;top:62px;left:66px;right:66px;display:flex;justify-content:space-between;align-items:center;font:10px/1.8 'Courier New',monospace;letter-spacing:2px;color:var(--muted)}.signal{display:flex;gap:10px;align-items:center}.signal i{width:4px;height:4px;border-radius:50%;background:#a0c6cc;box-shadow:0 0 10px #9ec5cc70}.cross{font-size:18px;color:#8fa6ad}
+.hero{position:relative;padding:0 24px;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;transform:translateY(-7svh);text-align:center}
+h1{font-size:clamp(74px,14vw,184px);font-weight:600;line-height:1;margin:0;letter-spacing:.17em;padding-left:.17em;color:#dbe2e5;text-shadow:0 2px 28px #b6d5e512}
+.identity{margin:25px 0 0;font-size:clamp(10px,1.1vw,13px);letter-spacing:.47em;padding-left:.47em;color:#a1adb3;font-weight:400}.rule{height:1px;width:34px;background:#819ba75e;margin:34px auto 25px}.description{font-size:13px;font-weight:400;letter-spacing:.055em;margin:0;color:#94a2aa}
+canvas{position:absolute;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}.footer{position:absolute;bottom:66px;left:66px;right:66px;display:flex;justify-content:space-between;align-items:end;font:10px/2 'Courier New',monospace;letter-spacing:1.8px;color:#879ba5}.geo{display:grid;grid-template-columns:auto auto;gap:0 15px}.geo span:nth-child(odd){color:#62747e}.domain{text-align:right}.domain strong{font-weight:400;color:#b8c5cb}.baseline{position:absolute;left:50%;bottom:36px;width:1px;height:13px;background:#7995a14a}.baseline:before{content:"";position:absolute;top:0;left:-3px;width:7px;height:1px;background:#7995a14a}
+@media(max-width:600px){.frame{inset:18px}.header{top:38px;left:36px;right:36px;font-size:8px;letter-spacing:1.5px}.hero{transform:translateY(-6svh)}h1{font-size:clamp(65px,19vw,114px);letter-spacing:.12em;padding-left:.12em}.identity{font-size:10px;margin-top:21px;letter-spacing:.32em;padding-left:.32em}.rule{margin-top:29px}.description{font-size:12px}.footer{bottom:43px;left:36px;right:36px;font-size:8px;letter-spacing:1px}.baseline{bottom:20px}}
+@media(max-height:460px){.hero{min-height:460px;transform:none}.scene{min-height:460px}.header{top:30px}.footer{bottom:30px}.frame{inset:14px}h1{font-size:90px}}
+</style>
+</head>
+<body>
+<main class="scene">
+<canvas id="network" aria-hidden="true"></canvas>
+<div class="frame" aria-hidden="true"><i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i></div>
+<header class="header"><span class="signal"><i aria-hidden="true"></i>BCHT.CH</span><span class="cross" aria-hidden="true">+</span></header>
+<section class="hero" aria-label="BCHT identity"><h1>BCHT</h1><p class="identity">BERCHTOLD · CH</p><div class="rule" aria-hidden="true"></div><p class="description">Private domain.</p></section>
+<footer class="footer"><div class="geo" aria-label="Switzerland reference coordinates"><span>LAT</span><span>46.8° N</span><span>LON</span><span>8.2° E</span></div><div class="domain"><strong>BCHT.CH</strong><br>EST. 2026<br>CH</div></footer><div class="baseline" aria-hidden="true"></div>
+</main>
+<script>
+(()=>{'use strict';const canvas=document.getElementById('network'),ctx=canvas.getContext('2d');if(!ctx)return;
+const motion=matchMedia('(prefers-reduced-motion: reduce)');let width=0,height=0,frame=0,last=0,time=0;
+// Deterministic terrain: same identity at every visit, no network requests.
+let seed=27106;const random=()=>{seed=(seed*16807)%2147483647;return(seed-1)/2147483646};
+const rows=13,cols=24,points=[];for(let r=0;r<rows;r++)for(let c=0;c<cols;c++)points.push({r,c,x:(c/(cols-1)-.5)*2.7+(random()-.5)*.07,z:r/(rows-1),j:random(),phase:random()*Math.PI*2});
+function project(p){const depth=.24+p.z*1.5;const wave=Math.sin(p.x*4+p.z*6+time*.12)*.016+Math.cos(p.x*7-p.z*4+time*.08)*.012;return{x:width/2+p.x*width*depth*.63,y:height*(.61+p.z*p.z*.48+wave*depth),a:.08+p.z*.28};}
+function draw(){ctx.clearRect(0,0,width,height);const pos=points.map(project);ctx.lineWidth=.6;for(let i=0;i<points.length;i++){const p=points[i],a=pos[i];for(const n of [p.c<cols-1?i+1:-1,p.r<rows-1?i+cols:-1,p.c<cols-1&&p.r<rows-1&&p.j>.48?i+cols+1:-1]){if(n<0)continue;const b=pos[n];ctx.strokeStyle=`rgba(117,162,182,${a.a*.6})`;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();}if(p.j>.75){const pulse=motion.matches?1:.8+Math.sin(time*.35+p.phase)*.2;ctx.fillStyle=`rgba(169,208,221,${a.a*pulse+ .12})`;ctx.beginPath();ctx.arc(a.x,a.y,p.j>.94?1.8:1,0,Math.PI*2);ctx.fill();if(p.j>.96){const glow=ctx.createRadialGradient(a.x,a.y,0,a.x,a.y,12);glow.addColorStop(0,'rgba(133,190,212,.16)');glow.addColorStop(1,'rgba(133,190,212,0)');ctx.fillStyle=glow;ctx.fillRect(a.x-12,a.y-12,24,24);}}}}
+function tick(now){if(now-last>=1000/30){time+=last?Math.min((now-last)/1000,.1):0;last=now;draw()}frame=requestAnimationFrame(tick)}
+function sync(){cancelAnimationFrame(frame);last=0;if(!document.hidden&&!motion.matches)frame=requestAnimationFrame(tick);else draw()}
+function resize(){width=canvas.clientWidth;height=canvas.clientHeight;const dpr=Math.min(devicePixelRatio||1,2);canvas.width=Math.round(width*dpr);canvas.height=Math.round(height*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);draw()}
+window.addEventListener('resize',resize,{passive:true});document.addEventListener('visibilitychange',sync);motion.addEventListener('change',sync);resize();sync();})();
+</script>
+</body>
+</html>
