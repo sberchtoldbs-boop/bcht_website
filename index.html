@@ -24,16 +24,207 @@ h1 .ch-accent{color:#a3c5d0;text-shadow:0 0 30px #94bac524}
 canvas{position:absolute;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}.footer{position:absolute;bottom:66px;left:66px;right:66px;display:flex;justify-content:space-between;align-items:end;font:10px/2 'Courier New',monospace;letter-spacing:1.8px;color:#879ba5}.geo{display:grid;grid-template-columns:1fr}.geo span:last-child{color:#62747e}.domain{text-align:right}.domain strong{font-weight:400;color:#b8c5cb}.baseline{position:absolute;left:50%;bottom:36px;width:1px;height:13px;background:#7995a14a}.baseline:before{content:"";position:absolute;top:0;left:-3px;width:7px;height:1px;background:#7995a14a}
 @media(max-width:600px){.frame{inset:18px}.header{top:38px;left:36px;right:36px;font-size:8px;letter-spacing:1.5px}.hero{transform:translateY(-6svh)}h1{font-size:clamp(65px,19vw,114px);letter-spacing:.12em;padding-left:.12em}.identity{font-size:10px;margin-top:21px;letter-spacing:.32em;padding-left:.32em}.rule{margin-top:29px}.description{font-size:12px}.footer{bottom:43px;left:36px;right:36px;font-size:8px;letter-spacing:1px}.baseline{bottom:20px}}
 @media(max-height:460px){.hero{min-height:460px;transform:none}.scene{min-height:460px}.header{top:30px}.footer{bottom:30px}.frame{inset:14px}h1{font-size:90px}}
+
+/* Phase 1: navigation shares the landing page's palette and spacing. */
+[hidden]{display:none!important}
+.header{min-height:32.4px}
+.menu-toggle{display:inline-grid;place-items:center;flex-shrink:0;width:44px;height:44px;margin:-13px -16.6px;padding:0;border:0;border-radius:50%;background:transparent;color:#8fa6ad;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.toggle-glyph{display:block;font:18px/1 'Courier New',monospace;transition:transform 240ms ease,color 240ms ease}
+.menu-toggle:hover .toggle-glyph{color:var(--accent)}
+.menu-toggle:focus-visible,.menu-choice:focus-visible,.menu-back:focus-visible{outline:1px solid #a3c5d0;outline-offset:6px}
+.hero,.header .signal,.footer{transition:opacity 240ms ease}
+.overlay-open,.overlay-open body{overflow:hidden}
+.overlay-open .scene .hero{opacity:0}
+.overlay-open .scene .header .signal{opacity:0}
+.overlay-open .scene .footer{opacity:.12}
+.navigation-dialog{position:fixed;inset:0;width:100%;height:100%;height:100dvh;max-width:none;max-height:none;margin:0;padding:0;border:0;background:rgba(8,12,16,.90);color:var(--white);overflow:auto;overscroll-behavior:contain;opacity:0;transition:opacity 240ms ease}
+.navigation-dialog[open]{display:flex;flex-direction:column}
+.navigation-dialog::backdrop{background:transparent}
+.navigation-dialog.is-visible{opacity:1}
+.navigation-dialog.is-visible .toggle-glyph{transform:rotate(45deg);color:var(--accent)}
+.overlay-header{position:fixed;z-index:1;top:69.2px;left:66px;right:66px;display:flex;justify-content:space-between;align-items:flex-start;font:10px/1.8 'Courier New',monospace;letter-spacing:2px}
+.overlay-brand{margin:0;font:inherit;font-weight:400;color:var(--muted)}
+.overlay-subtitle{margin:12px 0 0 14px;color:#62747e;font:inherit;font-size:9px;letter-spacing:2px}
+.overlay-content{width:min(760px,calc(100% - 132px));margin:auto;padding:150px 0 110px}
+.menu-list{list-style:none;margin:0;padding:0}
+.menu-choice{position:relative;display:flex;align-items:center;gap:26px;width:100%;min-height:80px;padding:22px 0;border:0;border-bottom:1px solid #71828c26;background:transparent;color:var(--white);text-align:left;cursor:pointer;touch-action:manipulation;opacity:0;transform:translateY(6px);transition:opacity 240ms ease,transform 240ms ease}
+.menu-choice::after{content:"";position:absolute;bottom:-1px;left:0;width:0;height:1px;background:#94bac58c;transition:width 200ms ease}
+.menu-choice:hover::after,.menu-choice:focus-visible::after{width:100%}
+.menu-choice:hover .menu-label,.menu-choice:focus-visible .menu-label{color:#a3c5d0}
+.menu-number{flex:0 0 42px;color:#62747e;font:11px/1.5 'Courier New',monospace;letter-spacing:1.5px}
+.menu-label{font:500 clamp(36px,5vw,64px)/1.2 Arial,Helvetica,sans-serif;letter-spacing:.075em;transition:color 200ms ease}
+.navigation-dialog.is-visible .menu-choice{opacity:1;transform:none;transition-delay:calc(var(--order)*35ms)}
+.menu-back{display:inline-flex;align-items:center;min-height:44px;margin:0 0 34px;padding:0;border:0;background:transparent;color:#94bac5;font:10px/1.8 'Courier New',monospace;letter-spacing:2px;cursor:pointer;touch-action:manipulation}
+.panel-number{margin:0 0 20px;color:#62747e;font:11px/1.8 'Courier New',monospace;letter-spacing:2px}
+.panel-title{margin:0;color:var(--white);font:500 clamp(40px,7vw,80px)/1.15 Arial,Helvetica,sans-serif;letter-spacing:.075em}
+.panel-title:focus{outline:none}
+.panel-rule{width:34px;height:1px;margin:34px 0 0;background:#819ba75e}
+@media(max-width:600px){.overlay-header{top:45.2px;left:36px;right:36px;font-size:8px;letter-spacing:1.5px}.overlay-subtitle{font-size:8px;letter-spacing:1.5px}.overlay-content{width:calc(100% - 72px);padding:132px 0 80px}.menu-choice{gap:12px;min-height:76px;padding:20px 0}.menu-number{flex-basis:34px;font-size:9px;letter-spacing:1px}.menu-label{font-size:clamp(27px,7.5vw,44px)}.panel-title{font-size:clamp(32px,8vw,48px)}}
+@media(max-height:460px){.overlay-header{top:37.2px}.overlay-content{padding-top:116px;padding-bottom:52px}.menu-choice{min-height:64px;padding:14px 0}.menu-label{font-size:32px}}
+@media(prefers-reduced-motion:reduce){.hero,.header .signal,.footer,.navigation-dialog,.toggle-glyph,.menu-choice,.menu-choice::after,.menu-label{transition:none!important}.menu-choice{transform:none}}
 </style>
 </head>
 <body>
 <main class="scene">
 <canvas id="network" aria-hidden="true"></canvas>
 <div class="frame" aria-hidden="true"><i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i></div>
-<header class="header"><span class="signal"><i aria-hidden="true"></i>BCHT.CH</span><span class="cross" aria-hidden="true">+</span></header>
+<header class="header" id="landing-header"><span class="signal"><i aria-hidden="true"></i>BCHT.CH</span><button class="menu-toggle" id="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navigation-dialog" aria-haspopup="dialog" hidden><span class="toggle-glyph" aria-hidden="true">+</span></button><noscript><span class="cross" aria-hidden="true">+</span></noscript></header>
 <section class="hero" aria-label="BCHT identity"><h1>B<span class="ch-accent">CH</span>T</h1><p class="identity">BERCHTOLD · CH</p><div class="rule" aria-hidden="true"></div><p class="description">Private domain.</p></section>
 <footer class="footer"><div class="geo" aria-label="Location: Switzerland, Europe"><span>SWITZERLAND</span><span>EUROPE</span></div><div class="domain"><strong>BCHT.CH</strong><br>DIGITAL HOME<br>CH</div></footer><div class="baseline" aria-hidden="true"></div>
 </main>
+<dialog class="navigation-dialog" id="navigation-dialog" aria-labelledby="navigation-title" aria-describedby="navigation-subtitle">
+  <header class="overlay-header" id="overlay-header">
+    <div>
+      <h2 class="overlay-brand" id="navigation-title"><span class="signal"><i aria-hidden="true"></i>BCHT.CH</span></h2>
+      <p class="overlay-subtitle" id="navigation-subtitle">DIGITAL IDENTITY</p>
+    </div>
+  </header>
+  <div class="overlay-content">
+    <nav id="navigation-menu" aria-label="Digital identity sections">
+      <ol class="menu-list">
+        <li><button class="menu-choice" type="button" data-menu-view="identity" aria-controls="panel-identity" style="--order:0"><span class="menu-number" aria-hidden="true">01 /</span><span class="menu-label">IDENTITY</span></button></li>
+        <li><button class="menu-choice" type="button" data-menu-view="contact" aria-controls="panel-contact" style="--order:1"><span class="menu-number" aria-hidden="true">02 /</span><span class="menu-label">CONTACT</span></button></li>
+        <li><button class="menu-choice" type="button" data-menu-view="info" aria-controls="panel-info" style="--order:2"><span class="menu-number" aria-hidden="true">03 /</span><span class="menu-label">INFO</span></button></li>
+      </ol>
+      <!-- Future public connections can use the same view structure after approval. -->
+    </nav>
+    <section id="panel-identity" data-menu-panel="identity" aria-labelledby="identity-title" hidden>
+      <button class="menu-back" type="button" data-menu-back><span aria-hidden="true">←&nbsp;</span> MENU</button>
+      <p class="panel-number" aria-hidden="true">01 /</p>
+      <h3 class="panel-title" id="identity-title" tabindex="-1">IDENTITY</h3>
+      <div class="panel-rule" aria-hidden="true"></div>
+    </section>
+    <section id="panel-contact" data-menu-panel="contact" aria-labelledby="contact-title" hidden>
+      <button class="menu-back" type="button" data-menu-back><span aria-hidden="true">←&nbsp;</span> MENU</button>
+      <p class="panel-number" aria-hidden="true">02 /</p>
+      <h3 class="panel-title" id="contact-title" tabindex="-1">CONTACT</h3>
+      <div class="panel-rule" aria-hidden="true"></div>
+    </section>
+    <section id="panel-info" data-menu-panel="info" aria-labelledby="info-title" hidden>
+      <button class="menu-back" type="button" data-menu-back><span aria-hidden="true">←&nbsp;</span> MENU</button>
+      <p class="panel-number" aria-hidden="true">03 /</p>
+      <h3 class="panel-title" id="info-title" tabindex="-1">INFO</h3>
+      <div class="panel-rule" aria-hidden="true"></div>
+    </section>
+  </div>
+</dialog>
+<script>
+(() => {
+  'use strict';
+  const toggle = document.getElementById('menu-toggle');
+  const dialog = document.getElementById('navigation-dialog');
+  if (typeof dialog.showModal !== 'function') return;
+  const landingHeader = document.getElementById('landing-header');
+  const overlayHeader = document.getElementById('overlay-header');
+  const menu = document.getElementById('navigation-menu');
+  const choices = [...dialog.querySelectorAll('[data-menu-view]')];
+  const panels = [...dialog.querySelectorAll('[data-menu-panel]')];
+  const motion = matchMedia('(prefers-reduced-motion: reduce)');
+  let selectedChoice = choices[0];
+  let openingFrame = 0;
+  let closingTimer = 0;
+  let closing = false;
+
+  function resetViews() {
+    menu.hidden = false;
+    panels.forEach(panel => { panel.hidden = true; });
+    dialog.scrollTop = 0;
+  }
+
+  function openMenu() {
+    if (dialog.open || closing) return;
+    resetViews();
+    selectedChoice = choices[0];
+    // Keep the same toggle inside the modal so it remains keyboard-accessible.
+    overlayHeader.append(toggle);
+    toggle.setAttribute('aria-expanded', 'true');
+    toggle.setAttribute('aria-label', 'Close menu');
+    toggle.removeAttribute('aria-haspopup');
+    dialog.showModal();
+    document.documentElement.classList.add('overlay-open');
+    selectedChoice.focus({ preventScroll: true });
+    if (motion.matches) {
+      dialog.classList.add('is-visible');
+    } else {
+      openingFrame = requestAnimationFrame(() => {
+        openingFrame = requestAnimationFrame(() => {
+          dialog.classList.add('is-visible');
+          openingFrame = 0;
+        });
+      });
+    }
+  }
+
+  function closeMenu() {
+    if (!dialog.open || closing) return;
+    closing = true;
+    cancelAnimationFrame(openingFrame);
+    openingFrame = 0;
+    dialog.classList.remove('is-visible');
+    // Keep the page inert through the exit transition.
+    if (motion.matches) dialog.close();
+    else closingTimer = setTimeout(() => dialog.close(), 240);
+  }
+
+  dialog.addEventListener('close', () => {
+    cancelAnimationFrame(openingFrame);
+    clearTimeout(closingTimer);
+    openingFrame = closingTimer = 0;
+    closing = false;
+    dialog.classList.remove('is-visible');
+    document.documentElement.classList.remove('overlay-open');
+    resetViews();
+    landingHeader.append(toggle);
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-label', 'Open menu');
+    toggle.setAttribute('aria-haspopup', 'dialog');
+    toggle.focus({ preventScroll: true });
+  });
+
+  toggle.addEventListener('click', () => {
+    if (dialog.open) closeMenu();
+    else openMenu();
+  });
+  dialog.addEventListener('cancel', event => {
+    event.preventDefault();
+    closeMenu();
+  });
+
+  choices.forEach(choice => {
+    choice.addEventListener('click', () => {
+      if (closing) return;
+      const panel = panels.find(item => item.dataset.menuPanel === choice.dataset.menuView);
+      if (!panel) return;
+      selectedChoice = choice;
+      menu.hidden = true;
+      panels.forEach(item => { item.hidden = item !== panel; });
+      dialog.scrollTop = 0;
+      panel.querySelector('.panel-title').focus({ preventScroll: true });
+    });
+  });
+  dialog.querySelectorAll('[data-menu-back]').forEach(button => {
+    button.addEventListener('click', () => {
+      if (closing) return;
+      resetViews();
+      selectedChoice.focus({ preventScroll: true });
+    });
+  });
+
+  dialog.addEventListener('keydown', event => {
+    if (event.key !== 'Tab') return;
+    const focusable = [...dialog.querySelectorAll('button:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])')]
+      .filter(element => !element.closest('[hidden]') && element.getClientRects().length);
+    const first = focusable[0], last = focusable[focusable.length - 1];
+    if (!first) return;
+    const active = document.activeElement;
+    if (!focusable.includes(active) || (event.shiftKey && active === first) || (!event.shiftKey && active === last)) {
+      event.preventDefault();
+      (event.shiftKey ? last : first).focus({ preventScroll: true });
+    }
+  });
+  toggle.hidden = false;
+})();
+</script>
 <script>
 (()=>{'use strict';const canvas=document.getElementById('network'),ctx=canvas.getContext('2d');if(!ctx)return;
 const motion=matchMedia('(prefers-reduced-motion: reduce)');let width=0,height=0,frame=0,last=0,time=0;
@@ -49,3 +240,4 @@ window.addEventListener('resize',resize,{passive:true});document.addEventListene
 </script>
 </body>
 </html>
+
