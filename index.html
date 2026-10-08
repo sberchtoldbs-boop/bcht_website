@@ -41,7 +41,8 @@ canvas{position:absolute;inset:0;width:100%;height:100%;z-index:-1;pointer-event
 .navigation-dialog[open]{display:flex;flex-direction:column}
 .navigation-dialog::backdrop{background:transparent}
 .navigation-dialog.is-visible{opacity:1}
-.navigation-dialog.is-visible .toggle-glyph{transform:rotate(45deg);color:var(--accent)}
+.overlay-header .toggle-glyph{font-size:24px}
+.navigation-dialog.is-visible .toggle-glyph{transform:rotate(45deg);color:#b8d4dd}
 .overlay-header{position:fixed;z-index:1;top:69.2px;left:66px;right:66px;display:flex;justify-content:space-between;align-items:flex-start;font:10px/1.8 'Courier New',monospace;letter-spacing:2px}
 .overlay-brand{margin:0;font:inherit;font-weight:400;color:var(--muted)}
 .overlay-subtitle{margin:12px 0 0 14px;color:#62747e;font:inherit;font-size:9px;letter-spacing:2px}
@@ -54,7 +55,8 @@ canvas{position:absolute;inset:0;width:100%;height:100%;z-index:-1;pointer-event
 .menu-number{flex:0 0 42px;color:#62747e;font:11px/1.5 'Courier New',monospace;letter-spacing:1.5px}
 .menu-label{font:500 clamp(36px,5vw,64px)/1.2 Arial,Helvetica,sans-serif;letter-spacing:.075em;transition:color 200ms ease}
 .navigation-dialog.is-visible .menu-choice{opacity:1;transform:none;transition-delay:calc(var(--order)*35ms)}
-.menu-back{display:inline-flex;align-items:center;min-height:44px;margin:0 0 34px;padding:0;border:0;background:transparent;color:#94bac5;font:10px/1.8 'Courier New',monospace;letter-spacing:2px;cursor:pointer;touch-action:manipulation}
+.menu-back{display:inline-flex;align-items:center;min-height:44px;margin:0 0 34px;padding:0;border:0;background:transparent;color:#b8d4dd;font:12px/1.8 'Courier New',monospace;letter-spacing:2px;cursor:pointer;touch-action:manipulation}
+.menu-back span{font-size:16px;line-height:1;margin-right:5px}
 .panel-number{margin:0 0 20px;color:#62747e;font:11px/1.8 'Courier New',monospace;letter-spacing:2px}
 .panel-title{margin:0;color:var(--white);font:500 clamp(40px,7vw,80px)/1.15 Arial,Helvetica,sans-serif;letter-spacing:.075em}
 .panel-title:focus{outline:none}
