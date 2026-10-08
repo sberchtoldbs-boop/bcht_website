@@ -1,23 +1,26 @@
-# BCHT · V0.1
+# BCHT.CH
 
-Minimalistische Landingpage für bcht.ch. Vanilla HTML/CSS/JavaScript ohne Build, externe Fonts, Tracking oder Netzwerkabhängigkeiten.
+Persönliche Digital Identity und Digital Card von Stefan Berchtold. Eine reduzierte öffentliche Visitenkarte mit dunkler Gestaltung, feinen Linien und einem dezenten Netzwerk im Hintergrund.
 
-## Vorschau
+## Bereiche
 
-`index.html` direkt im Browser öffnen. Alternativ im Projektordner `python3 -m http.server 8000` starten und http://localhost:8000 öffnen.
+- **IDENTITY** – Name, Switzerland und die Themenfelder Aviation, Technology, Digital Systems und Automation.
+- **CARD** – digitale Karte teilen, Website-Link kopieren oder eine vCard speichern. Die vCard enthält nur Name und Website-URL sowie die notwendigen Formatfelder.
+- **PRIVACY** – bewusste Begrenzung der öffentlich sichtbaren Daten.
+- **INFO** – minimale Angaben zur digitalen Identität.
 
-CSS und JavaScript sind für diese erste portable Version in index.html enthalten. assets/favicon.svg ist das lokale Icon. Der Canvas zeichnet ein dezentes perspektivisches Netzwerk mit 30 FPS, maximal doppelter Pixeldichte, Pause bei unsichtbarem Tab und statischer Darstellung bei prefers-reduced-motion. Ohne JavaScript bleibt die vollständige Identität sichtbar.
+## Privacy by Design
 
-## Design
+Die Website-Anwendung verwendet keine Analytics, Tracking-Skripte, Site-Cookies, externen Fonts oder Formulare und benötigt kein Application-Backend. Es wird keine E-Mail-Adresse öffentlich angezeigt. Diese Aussagen beziehen sich auf die Anwendung, nicht auf mögliche Logs der Hosting-Infrastruktur.
 
-BCHT / BERCHTOLD · CH / Private domain. Die Koordinaten 46.8° N / 8.2° E sind eine grobe Schweiz-Referenz, keine Wohnadresse. Keine Navigation oder Kontaktinformationen.
+## Technik und Bedienung
 
-## Stand und nächste Schritte
+Statische Website auf GitHub Pages unter https://bcht.ch, mit Vanilla HTML/CSS/JavaScript und ohne Build-Schritt oder externe Libraries. CSS und JavaScript bleiben vorerst in `index.html`.
 
-V0.1 ist ein lokaler Entwurf, noch nicht veröffentlicht. Das ursprüngliche Bildmockup war im Umsetzungschat nicht verfügbar; diese Version basiert auf dem bestätigten Designbrief. Desktop- und Mobilansicht müssen vor Freigabe visuell geprüft werden.
+Das responsive Fullscreen-Menü unterstützt Tastatur und Touch, Escape zum Schliessen, sichtbaren Tastaturfokus und Fokus-Rückgabe. `prefers-reduced-motion` reduziert Animationen und stellt das Netzwerk statisch dar.
 
-Nach der Designfreigabe: GitHub-Repository und Branch/PR-Workflow einrichten; GitHub Pages konfigurieren. Erst bei funktionierendem Hosting Custom Domain und Web-DNS verbinden. CNAME und kanonische/OG-URL erst beim tatsächlichen Deployment ergänzen. Ein OG-Vorschaubild folgt nach Designfreigabe.
+SHARE CARD verwendet die native Web Share API, sofern verfügbar; andernfalls wird der Website-Link kopiert. COPY LINK hat einen Kopier-Fallback und bietet bei blockierter Zwischenablage eine manuelle Auswahl.
 
-## DNS-Randbedingung
+## Lokal testen
 
-Hostpoint bleibt Registrar/DNS, Infomaniak bleibt Mailanbieter. MX, SPF, DKIM, autoconfig und autodiscover erhalten. Keine pauschalen DNS- oder Nameserveränderungen. Web-A/AAAA und eventuell www erst separat nach Prüfung anpassen; Wildcard-Records nicht blind löschen.
+Das vollständige Repository herunterladen und entpacken, damit `assets/favicon.svg` und `assets/stefan-berchtold.vcf` neben `index.html` verfügbar bleiben. Die HTML-Datei lässt sich direkt öffnen; für die nativen Browserfunktionen empfiehlt sich ein lokaler Server auf localhost oder die HTTPS-Website. Unterstützung für Teilen und vCard-Import hängt vom Browser und Gerät ab.

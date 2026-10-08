@@ -24,16 +24,384 @@ h1 .ch-accent{color:#a3c5d0;text-shadow:0 0 30px #94bac524}
 canvas{position:absolute;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}.footer{position:absolute;bottom:66px;left:66px;right:66px;display:flex;justify-content:space-between;align-items:end;font:10px/2 'Courier New',monospace;letter-spacing:1.8px;color:#879ba5}.geo{display:grid;grid-template-columns:1fr}.geo span:last-child{color:#62747e}.domain{text-align:right}.domain strong{font-weight:400;color:#b8c5cb}.baseline{position:absolute;left:50%;bottom:36px;width:1px;height:13px;background:#7995a14a}.baseline:before{content:"";position:absolute;top:0;left:-3px;width:7px;height:1px;background:#7995a14a}
 @media(max-width:600px){.frame{inset:18px}.header{top:38px;left:36px;right:36px;font-size:8px;letter-spacing:1.5px}.hero{transform:translateY(-6svh)}h1{font-size:clamp(65px,19vw,114px);letter-spacing:.12em;padding-left:.12em}.identity{font-size:10px;margin-top:21px;letter-spacing:.32em;padding-left:.32em}.rule{margin-top:29px}.description{font-size:12px}.footer{bottom:43px;left:36px;right:36px;font-size:8px;letter-spacing:1px}.baseline{bottom:20px}}
 @media(max-height:460px){.hero{min-height:460px;transform:none}.scene{min-height:460px}.header{top:30px}.footer{bottom:30px}.frame{inset:14px}h1{font-size:90px}}
+
+/* Phase 1: navigation shares the landing page's palette and spacing. */
+[hidden]{display:none!important}
+.header{min-height:32.4px;z-index:1}
+.menu-toggle{display:inline-grid;place-items:center;flex-shrink:0;width:44px;height:44px;margin:-13px -16.6px;padding:0;border:0;border-radius:50%;background:transparent;color:#8fa6ad;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.toggle-glyph{display:block;font:18px/1 'Courier New',monospace;transition:transform 240ms ease,color 240ms ease}
+.menu-toggle:hover .toggle-glyph{color:var(--accent)}
+.menu-toggle:focus-visible,.menu-choice:focus-visible,.menu-back:focus-visible{outline:1px solid #a3c5d0;outline-offset:6px}
+.hero,.header .signal,.footer{transition:opacity 240ms ease}
+.overlay-open,.overlay-open body{overflow:hidden}
+.overlay-open .scene .hero{opacity:0}
+.overlay-open .scene .header .signal{opacity:0}
+.overlay-open .scene .footer{opacity:.12}
+.navigation-dialog{position:fixed;inset:0;width:100%;height:100%;height:100dvh;max-width:none;max-height:none;margin:0;padding:0;border:0;background:rgba(8,12,16,.90);color:var(--white);overflow:auto;overscroll-behavior:contain;opacity:0;transition:opacity 240ms ease}
+.navigation-dialog[open]{display:flex;flex-direction:column}
+.navigation-dialog::backdrop{background:transparent}
+.navigation-dialog.is-visible{opacity:1}
+.overlay-header .toggle-glyph{font-size:24px}
+.navigation-dialog.is-visible .toggle-glyph{transform:rotate(45deg);color:#b8d4dd}
+.overlay-header{position:fixed;z-index:1;top:69.2px;left:66px;right:66px;display:flex;justify-content:space-between;align-items:flex-start;font:10px/1.8 'Courier New',monospace;letter-spacing:2px}
+.overlay-brand{margin:0;font:inherit;font-weight:400;color:var(--muted)}
+.overlay-subtitle{margin:12px 0 0 14px;color:#62747e;font:inherit;font-size:9px;letter-spacing:2px}
+.overlay-content{width:min(760px,calc(100% - 132px));margin:auto;padding:150px 0 110px}
+.menu-list{list-style:none;margin:0;padding:0}
+.menu-choice{position:relative;display:flex;align-items:center;gap:26px;width:100%;min-height:80px;padding:22px 0;border:0;border-bottom:1px solid #71828c26;background:transparent;color:var(--white);text-align:left;cursor:pointer;touch-action:manipulation;opacity:0;transform:translateY(6px);transition:opacity 240ms ease,transform 240ms ease}
+.menu-choice::after{content:"";position:absolute;bottom:-1px;left:0;width:0;height:1px;background:#94bac58c;transition:width 200ms ease}
+.menu-choice:hover::after,.menu-choice:focus-visible::after{width:100%}
+.menu-choice:hover .menu-label,.menu-choice:focus-visible .menu-label{color:#a3c5d0}
+.menu-number{flex:0 0 42px;color:#62747e;font:11px/1.5 'Courier New',monospace;letter-spacing:1.5px}
+.menu-label{font:500 clamp(36px,5vw,64px)/1.2 Arial,Helvetica,sans-serif;letter-spacing:.075em;transition:color 200ms ease}
+.navigation-dialog.is-visible .menu-choice{opacity:1;transform:none;transition-delay:calc(var(--order)*35ms)}
+.menu-back{display:inline-flex;align-items:center;min-height:44px;margin:0 0 34px;padding:0;border:0;background:transparent;color:#b8d4dd;font:12px/1.8 'Courier New',monospace;letter-spacing:2px;cursor:pointer;touch-action:manipulation}
+.menu-back span{font-size:16px;line-height:1;margin-right:5px}
+.panel-number{margin:0 0 20px;color:#62747e;font:11px/1.8 'Courier New',monospace;letter-spacing:2px}
+.panel-title{margin:0;color:var(--white);font:500 clamp(40px,7vw,80px)/1.15 Arial,Helvetica,sans-serif;letter-spacing:.075em}
+.panel-title:focus{outline:none}
+.panel-rule{width:34px;height:1px;margin:34px 0 0;background:#819ba75e}
+@media(max-width:600px){.overlay-header{top:45.2px;left:36px;right:36px;font-size:8px;letter-spacing:1.5px}.overlay-subtitle{font-size:8px;letter-spacing:1.5px}.overlay-content{width:calc(100% - 72px);padding:132px 0 80px}.menu-choice{gap:12px;min-height:76px;padding:20px 0}.menu-number{flex-basis:34px;font-size:9px;letter-spacing:1px}.menu-label{font-size:clamp(27px,7.5vw,44px)}.panel-title{font-size:clamp(32px,8vw,48px)}}
+@media(max-height:460px){.overlay-header{top:37.2px}.overlay-content{padding-top:116px;padding-bottom:52px}.menu-choice{min-height:64px;padding:14px 0}.menu-label{font-size:32px}}
+@media(prefers-reduced-motion:reduce){.hero,.header .signal,.footer,.navigation-dialog,.toggle-glyph,.menu-choice,.menu-choice::after,.menu-label{transition:none!important}.menu-choice{transform:none}}
+/* Phase 2: content stays within the existing modal interface. */
+.overlay-content.has-panel{margin:150px auto 70px;padding:6px 8px;max-height:calc(100dvh - 220px);overflow-y:auto;scrollbar-width:thin;scrollbar-color:#62747e transparent}
+.content-title{font-size:clamp(30px,4.5vw,56px);letter-spacing:.045em;overflow-wrap:break-word}
+
+.panel-location,.panel-closing,.manual-label{font:10px/1.8 'Courier New',monospace;letter-spacing:2px;color:#62747e}
+.panel-location{margin:18px 0 0}.panel-closing{margin:38px 0 0}.panel-closing span{display:block}
+.identity-fields{display:flex;flex-wrap:wrap;gap:14px 30px;margin:34px 0 0;padding:0;list-style:none;font:12px/1.8 'Courier New',monospace;letter-spacing:2px;color:#a1adb3}
+
+.card-actions{display:flex;flex-wrap:wrap;gap:8px 30px;margin-top:24px}
+.card-action{display:inline-flex;align-items:center;justify-content:flex-start;min-height:44px;padding:0;border:0;border-bottom:1px solid #71828c40;background:transparent;color:var(--accent);font:10px/1.8 'Courier New',monospace;letter-spacing:1.5px;text-decoration:none;cursor:pointer;touch-action:manipulation}
+#copy-link{min-width:145px}.card-action:hover{color:#c2dde5}
+.card-action:focus-visible,.manual-link:focus-visible{outline:1px solid #a3c5d0;outline-offset:4px}
+.manual-copy{margin-top:24px}.manual-label{display:block;margin-bottom:8px}.manual-link{width:100%;max-width:340px;min-height:44px;border:0;border-bottom:1px solid #71828c40;border-radius:0;padding:8px 0;background:transparent;color:var(--white);font:16px/1.5 'Courier New',monospace}
+.info-grid{display:grid;grid-template-columns:90px minmax(0,1fr);gap:18px 24px;margin:34px 0 0;font:12px/1.8 'Courier New',monospace;letter-spacing:1px}.info-grid dt{color:#62747e}.info-grid dd{margin:0;color:#b8c5cb;overflow-wrap:anywhere}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+@media(max-width:600px){.overlay-content.has-panel{margin-top:132px;margin-bottom:40px;max-height:calc(100dvh - 172px)}.content-title{font-size:clamp(28px,7.3vw,42px)}.identity-fields{flex-direction:column;gap:10px}.info-grid{grid-template-columns:72px minmax(0,1fr);gap:16px 12px;font-size:11px;letter-spacing:.6px}.panel-closing{font-size:9px;letter-spacing:1.5px}.menu-back{margin-bottom:24px}}
+@media(max-height:460px){.overlay-content.has-panel{margin-top:116px;margin-bottom:28px;max-height:calc(100dvh - 144px)}}
+/* Phase 3: a restrained public digital card. */
+.focus-label,.card-caption{font:10px/1.8 'Courier New',monospace;letter-spacing:2px;color:#62747e}.focus-label{margin:30px 0 0}.identity-fields{margin-top:14px}
+.digital-card{position:relative;margin-top:30px;padding:28px;border:1px solid #71828c40;background:linear-gradient(135deg,#94bac508,transparent 65%);max-width:540px}
+.digital-card::before,.digital-card::after{content:"";position:absolute;width:12px;height:12px;border-color:#94bac58c;border-style:solid;pointer-events:none}.digital-card::before{top:-1px;left:-1px;border-width:1px 0 0 1px}.digital-card::after{bottom:-1px;right:-1px;border-width:0 1px 1px 0}
+.card-name{margin:0;font:400 clamp(22px,3vw,32px)/1.3 Arial,Helvetica,sans-serif;letter-spacing:.045em;overflow-wrap:break-word}.card-domain{margin:26px 0 8px;font:14px/1.8 'Courier New',monospace;letter-spacing:3px;color:#b8d4dd}.card-caption{margin:0}.digital-card .panel-rule{margin-top:24px}
+.privacy-grid{grid-template-columns:minmax(130px,170px) minmax(0,1fr)}
+@media(max-width:600px){.digital-card{padding:22px 18px}.privacy-grid{grid-template-columns:minmax(0,1fr) 42px;gap:16px 12px}.privacy-grid dt{overflow-wrap:break-word}.menu-label{font-size:clamp(25px,7vw,44px)}}
 </style>
 </head>
 <body>
 <main class="scene">
 <canvas id="network" aria-hidden="true"></canvas>
 <div class="frame" aria-hidden="true"><i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i></div>
-<header class="header"><span class="signal"><i aria-hidden="true"></i>BCHT.CH</span><span class="cross" aria-hidden="true">+</span></header>
+<header class="header" id="landing-header"><span class="signal"><i aria-hidden="true"></i>BCHT.CH</span><button class="menu-toggle" id="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navigation-dialog" aria-haspopup="dialog" hidden><span class="toggle-glyph" aria-hidden="true">+</span></button><noscript><span class="cross" aria-hidden="true">+</span></noscript></header>
 <section class="hero" aria-label="BCHT identity"><h1>B<span class="ch-accent">CH</span>T</h1><p class="identity">BERCHTOLD · CH</p><div class="rule" aria-hidden="true"></div><p class="description">Private domain.</p></section>
 <footer class="footer"><div class="geo" aria-label="Location: Switzerland, Europe"><span>SWITZERLAND</span><span>EUROPE</span></div><div class="domain"><strong>BCHT.CH</strong><br>DIGITAL HOME<br>CH</div></footer><div class="baseline" aria-hidden="true"></div>
 </main>
+<dialog class="navigation-dialog" id="navigation-dialog" aria-labelledby="navigation-title" aria-describedby="navigation-subtitle">
+  <header class="overlay-header" id="overlay-header">
+    <div>
+      <h2 class="overlay-brand" id="navigation-title"><span class="signal"><i aria-hidden="true"></i>BCHT.CH</span></h2>
+      <p class="overlay-subtitle" id="navigation-subtitle">DIGITAL IDENTITY</p>
+    </div>
+  </header>
+  <div class="overlay-content">
+    <nav id="navigation-menu" aria-label="Digital identity sections">
+      <ol class="menu-list">
+        <li><button class="menu-choice" type="button" data-menu-view="identity" aria-controls="panel-identity" style="--order:0"><span class="menu-number" aria-hidden="true">01 /</span><span class="menu-label">IDENTITY</span></button></li>
+        <li><button class="menu-choice" type="button" data-menu-view="card" aria-controls="panel-card" style="--order:1"><span class="menu-number" aria-hidden="true">02 /</span><span class="menu-label">CARD</span></button></li>
+        <li><button class="menu-choice" type="button" data-menu-view="privacy" aria-controls="panel-privacy" style="--order:2"><span class="menu-number" aria-hidden="true">03 /</span><span class="menu-label">PRIVACY</span></button></li>
+        <li><button class="menu-choice" type="button" data-menu-view="info" aria-controls="panel-info" style="--order:3"><span class="menu-number" aria-hidden="true">04 /</span><span class="menu-label">INFO</span></button></li>
+      </ol>
+      <!-- Future public connections can use the same view structure after approval. -->
+    </nav>
+    <section id="panel-identity" data-menu-panel="identity" aria-labelledby="identity-title" hidden>
+      <button class="menu-back" type="button" data-menu-back><span aria-hidden="true">←&nbsp;</span> MENU</button>
+      <p class="panel-number">01 / IDENTITY</p>
+      <h3 class="panel-title content-title" id="identity-title" tabindex="-1">STEFAN BERCHTOLD</h3>
+      <p class="panel-location">SWITZERLAND</p>
+      <div class="panel-rule" aria-hidden="true"></div>
+      <p class="focus-label">FOCUS</p>
+      <ul class="identity-fields"><li>AVIATION</li><li>TECHNOLOGY</li><li>DIGITAL SYSTEMS</li><li>AUTOMATION</li></ul>
+      <p class="panel-closing">PERSONAL DIGITAL SPACE</p>
+    </section>
+    <section id="panel-card" data-menu-panel="card" aria-labelledby="card-title" hidden>
+      <button class="menu-back" type="button" data-menu-back><span aria-hidden="true">←&nbsp;</span> MENU</button>
+      <p class="panel-number">02 / CARD</p>
+      <h3 class="panel-title content-title" id="card-title" tabindex="-1">DIGITAL CARD</h3>
+      <div class="digital-card">
+        <p class="card-name">STEFAN BERCHTOLD</p>
+        <p class="panel-location">SWITZERLAND</p>
+        <div class="panel-rule" aria-hidden="true"></div>
+        <p class="card-domain">BCHT.CH</p>
+        <p class="card-caption">DIGITAL IDENTITY</p>
+      </div>
+      <div class="card-actions">
+        <button class="card-action" id="share-card" type="button">SHARE CARD</button>
+        <button class="card-action" id="copy-link" type="button"><span id="copy-label">COPY LINK</span></button>
+        <a class="card-action" href="assets/stefan-berchtold.vcf" download="stefan-berchtold.vcf" type="text/vcard">SAVE CARD</a>
+      </div>
+      <p class="sr-only" id="copy-status" role="status" aria-live="polite" aria-atomic="true"></p>
+      <div class="manual-copy" id="manual-copy" hidden>
+        <label class="manual-label" for="manual-link">SELECT AND COPY LINK</label>
+        <input class="manual-link" id="manual-link" type="text" value="https://bcht.ch" readonly spellcheck="false" autocomplete="off">
+      </div>
+    </section>
+    <section id="panel-privacy" data-menu-panel="privacy" aria-labelledby="privacy-title" hidden>
+      <button class="menu-back" type="button" data-menu-back><span aria-hidden="true">←&nbsp;</span> MENU</button>
+      <p class="panel-number">03 / PRIVACY</p>
+      <h3 class="panel-title content-title" id="privacy-title" tabindex="-1">PUBLIC SURFACE</h3>
+      <p class="panel-location">WEBSITE APPLICATION</p>
+      <div class="panel-rule" aria-hidden="true"></div>
+      <dl class="info-grid privacy-grid">
+        <dt>ANALYTICS</dt><dd>NONE</dd>
+        <dt>SITE COOKIES</dt><dd>NONE</dd>
+        <dt>EXTERNAL FONTS</dt><dd>NONE</dd>
+        <dt>FORM DATA</dt><dd>NONE</dd>
+        <dt>PUBLIC CONTACT</dt><dd>NONE</dd>
+        <dt>APP BACKEND</dt><dd>NONE</dd>
+      </dl>
+      <p class="panel-closing">MINIMAL BY DESIGN.</p>
+    </section>
+    <section id="panel-info" data-menu-panel="info" aria-labelledby="info-title" hidden>
+      <button class="menu-back" type="button" data-menu-back><span aria-hidden="true">←&nbsp;</span> MENU</button>
+      <p class="panel-number">04 / INFO</p>
+      <h3 class="panel-title content-title" id="info-title" tabindex="-1">BCHT.CH</h3>
+      <div class="panel-rule" aria-hidden="true"></div>
+      <dl class="info-grid">
+        <dt>TYPE</dt><dd>DIGITAL IDENTITY</dd>
+        <dt>REGION</dt><dd>CH</dd>
+        <dt>SINCE</dt><dd>2026</dd>
+        <dt>STATUS</dt><dd>PUBLIC</dd>
+        <dt>SCOPE</dt><dd>MINIMAL</dd>
+      </dl>
+      <p class="panel-closing"><span>PERSONAL COMMUNICATION</span><span>DIGITAL HOME</span></p>
+    </section>
+  </div>
+</dialog>
+<script>
+(() => {
+  'use strict';
+  const toggle = document.getElementById('menu-toggle');
+  const dialog = document.getElementById('navigation-dialog');
+  if (typeof dialog.showModal !== 'function') return;
+  const landingHeader = document.getElementById('landing-header');
+  const overlayHeader = document.getElementById('overlay-header');
+  const menu = document.getElementById('navigation-menu');
+  const choices = [...dialog.querySelectorAll('[data-menu-view]')];
+  const panels = [...dialog.querySelectorAll('[data-menu-panel]')];
+  const content = dialog.querySelector('.overlay-content');
+  const copyButton = document.getElementById('copy-link');
+  const shareButton = document.getElementById('share-card');
+  const copyLabel = document.getElementById('copy-label');
+  const copyStatus = document.getElementById('copy-status');
+  const manualCopy = document.getElementById('manual-copy');
+  const manualLink = document.getElementById('manual-link');
+  const cardPanel = document.getElementById('panel-card');
+  const publicLink = 'https://bcht.ch';
+  let copyRequest = 0, copyBusy = false, feedbackTimer = 0;
+  const motion = matchMedia('(prefers-reduced-motion: reduce)');
+  let selectedChoice = choices[0];
+  let openingFrame = 0;
+  let closingTimer = 0;
+  let closing = false;
+
+  function resetCard() {
+    copyRequest++;
+    copyBusy = false;
+    clearTimeout(feedbackTimer);
+    copyButton.removeAttribute('aria-busy');
+    shareButton.removeAttribute('aria-busy');
+    copyLabel.textContent = 'COPY LINK';
+    copyStatus.textContent = '';
+    manualCopy.hidden = true;
+  }
+
+  function legacyCopy() {
+    const previous = document.activeElement;
+    const field = document.createElement('textarea');
+    field.value = publicLink;
+    field.readOnly = true;
+    field.tabIndex = -1;
+    field.style.cssText = 'position:fixed;top:0;left:0;opacity:0;width:1px;height:1px;font-size:16px';
+    dialog.append(field);
+    let copied = false;
+    try {
+      field.focus({ preventScroll: true });
+      field.select();
+      field.setSelectionRange(0, publicLink.length);
+      copied = !!document.execCommand('copy');
+    } catch (_) { /* Offer manual selection if browser copying is blocked. */ }
+    finally {
+      field.remove();
+      if (previous && previous.isConnected) previous.focus({ preventScroll: true });
+    }
+    return copied;
+  }
+
+  async function copyLink() {
+    if (copyBusy || closing) return;
+    const request = ++copyRequest;
+    copyBusy = true;
+    clearTimeout(feedbackTimer);
+    copyButton.setAttribute('aria-busy', 'true');
+    let copied = false;
+    try {
+      if (window.isSecureContext && navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(publicLink);
+        copied = true;
+      }
+    } catch (_) { /* Fall through to the local copy fallback. */ }
+    if (request !== copyRequest || !dialog.open || closing || cardPanel.hidden) return;
+    if (!copied) copied = legacyCopy();
+    copyBusy = false;
+    copyButton.removeAttribute('aria-busy');
+    if (copied) {
+      manualCopy.hidden = true;
+      copyLabel.textContent = 'LINK COPIED';
+      copyStatus.textContent = 'Website link copied.';
+      feedbackTimer = setTimeout(() => {
+        if (request === copyRequest) {
+          copyLabel.textContent = 'COPY LINK';
+          copyStatus.textContent = '';
+        }
+      }, 3000);
+    } else {
+      copyLabel.textContent = 'COPY MANUALLY';
+      copyStatus.textContent = 'Automatic copying is unavailable. Select and copy the website link below.';
+      manualCopy.hidden = false;
+      manualLink.focus({ preventScroll: true });
+      manualLink.select();
+      manualLink.setSelectionRange(0, publicLink.length);
+      manualLink.scrollIntoView({ block: 'nearest' });
+    }
+  }
+  copyButton.addEventListener('click', copyLink);
+  shareButton.addEventListener('click', async () => {
+    if (copyBusy || closing) return;
+    if (typeof navigator.share !== 'function') {
+      await copyLink();
+      return;
+    }
+    const request = copyRequest;
+    shareButton.setAttribute('aria-busy', 'true');
+    try {
+      await navigator.share({ title: 'Stefan Berchtold', text: 'BCHT.CH', url: publicLink });
+    } catch (error) {
+      if (request !== copyRequest || !dialog.open || closing || cardPanel.hidden) return;
+      if (error.name !== 'AbortError') await copyLink();
+    } finally {
+      shareButton.removeAttribute('aria-busy');
+    }
+  });
+
+  function resetViews() {
+    resetCard();
+    content.classList.remove('has-panel');
+    content.scrollTop = 0;
+    menu.hidden = false;
+    panels.forEach(panel => { panel.hidden = true; });
+    dialog.scrollTop = 0;
+  }
+
+  function openMenu() {
+    if (dialog.open || closing) return;
+    resetViews();
+    selectedChoice = choices[0];
+    // Keep the same toggle inside the modal so it remains keyboard-accessible.
+    overlayHeader.append(toggle);
+    toggle.setAttribute('aria-expanded', 'true');
+    toggle.setAttribute('aria-label', 'Close menu');
+    toggle.removeAttribute('aria-haspopup');
+    dialog.showModal();
+    document.documentElement.classList.add('overlay-open');
+    selectedChoice.focus({ preventScroll: true });
+    if (motion.matches) {
+      dialog.classList.add('is-visible');
+    } else {
+      openingFrame = requestAnimationFrame(() => {
+        openingFrame = requestAnimationFrame(() => {
+          dialog.classList.add('is-visible');
+          openingFrame = 0;
+        });
+      });
+    }
+  }
+
+  function closeMenu() {
+    if (!dialog.open || closing) return;
+    closing = true;
+    resetCard();
+    cancelAnimationFrame(openingFrame);
+    openingFrame = 0;
+    dialog.classList.remove('is-visible');
+    // Keep the page inert through the exit transition.
+    if (motion.matches) dialog.close();
+    else closingTimer = setTimeout(() => dialog.close(), 240);
+  }
+
+  dialog.addEventListener('close', () => {
+    cancelAnimationFrame(openingFrame);
+    clearTimeout(closingTimer);
+    openingFrame = closingTimer = 0;
+    closing = false;
+    dialog.classList.remove('is-visible');
+    document.documentElement.classList.remove('overlay-open');
+    resetViews();
+    landingHeader.append(toggle);
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-label', 'Open menu');
+    toggle.setAttribute('aria-haspopup', 'dialog');
+    toggle.focus({ preventScroll: true });
+  });
+
+  toggle.addEventListener('click', () => {
+    if (dialog.open) closeMenu();
+    else openMenu();
+  });
+  dialog.addEventListener('cancel', event => {
+    event.preventDefault();
+    closeMenu();
+  });
+
+  choices.forEach(choice => {
+    choice.addEventListener('click', () => {
+      if (closing) return;
+      const panel = panels.find(item => item.dataset.menuPanel === choice.dataset.menuView);
+      if (!panel) return;
+      resetCard();
+      content.classList.add('has-panel');
+      content.scrollTop = 0;
+      selectedChoice = choice;
+      menu.hidden = true;
+      panels.forEach(item => { item.hidden = item !== panel; });
+      dialog.scrollTop = 0;
+      panel.querySelector('.panel-title').focus({ preventScroll: true });
+    });
+  });
+  dialog.querySelectorAll('[data-menu-back]').forEach(button => {
+    button.addEventListener('click', () => {
+      if (closing) return;
+      resetViews();
+      selectedChoice.focus({ preventScroll: true });
+    });
+  });
+
+  dialog.addEventListener('keydown', event => {
+    if (event.key !== 'Tab') return;
+    const focusable = [...dialog.querySelectorAll('button:not([disabled]), a[href], input:not([disabled]), [tabindex]:not([tabindex="-1"])')]
+      .filter(element => !element.closest('[hidden]') && element.getClientRects().length);
+    const first = focusable[0], last = focusable[focusable.length - 1];
+    if (!first) return;
+    const active = document.activeElement;
+    if (!focusable.includes(active) || (event.shiftKey && active === first) || (!event.shiftKey && active === last)) {
+      event.preventDefault();
+      (event.shiftKey ? last : first).focus({ preventScroll: true });
+    }
+  });
+  toggle.hidden = false;
+})();
+</script>
 <script>
 (()=>{'use strict';const canvas=document.getElementById('network'),ctx=canvas.getContext('2d');if(!ctx)return;
 const motion=matchMedia('(prefers-reduced-motion: reduce)');let width=0,height=0,frame=0,last=0,time=0;
@@ -49,3 +417,6 @@ window.addEventListener('resize',resize,{passive:true});document.addEventListene
 </script>
 </body>
 </html>
+
+
+
