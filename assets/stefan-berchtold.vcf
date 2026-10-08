@@ -2,6 +2,5 @@ BEGIN:VCARD
 VERSION:3.0
 N:Berchtold;Stefan;;;
 FN:Stefan Berchtold
-EMAIL;TYPE=INTERNET:stefan@bcht.ch
 URL:https://bcht.ch
 END:VCARD
