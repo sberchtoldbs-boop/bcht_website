@@ -4,7 +4,6 @@ Persönliche Digital Identity und Digital Card von Stefan Berchtold. Eine reduzi
 
 ## Bereiche
 
-- **IDENTITY** – Name, Switzerland und die Themenfelder Aviation, Technology, Digital Systems und Automation.
 - **CARD** – digitale Karte teilen, Website-Link kopieren oder eine vCard speichern. Die vCard enthält nur Name und Website-URL sowie die notwendigen Formatfelder.
 - **PRIVACY** – bewusste Begrenzung der öffentlich sichtbaren Daten.
 - **INFO** – minimale Angaben zur digitalen Identität.
